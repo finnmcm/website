@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FINN.MCMILLAN — Portfolio</title>
+
+  <!-- ============================================
+       FONTS: VT323 — authentic terminal/pixel font
+       Used across the entire site for the retro
+       computer terminal aesthetic.
+       ============================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+
+  <!-- ============================================
+       TAILWIND CSS via CDN
+       ============================================ -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ============================================
+       TAILWIND CONFIG: Custom theme extensions
+       - Custom terminal color palette (no default Tailwind colors)
+       - Two monospace font families
+       - Custom letter-spacing and line-height tokens
+       ============================================ -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['"VT323"', 'monospace'],
+            body: ['"VT323"', 'monospace'],
+          },
+          letterSpacing: {
+            terminal: '0.1em',
+          },
+          lineHeight: {
+            body: '1.7',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- ============================================
+       CUSTOM STYLES
+       - Dither pattern for decorative accents
+       - Stars background for mobile hero
+       - Scrollbar customization
+       - Blinking cursor animation
+       - Section divider patterns
+       ============================================ -->
+  <style>
+    /* Base reset and smooth scroll */
+    html {
+      scroll-behavior: smooth;
+      background: #000;
+    }
+
+    body {
+      background: #000;
+      color: #e0e0e0;
+    }
+
+    /* Custom scrollbar — thin, terminal-style */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Dither pattern — repeating pixel grid used as decorative accent */
+    .dither-pattern {
+      background-image:
+        repeating-linear-gradient(0deg, transparent 0px, transparent 1px, white 1px, white 2px),
+        repeating-linear-gradient(90deg, transparent 0px, transparent 1px, white 1px, white 2px);
+      background-size: 3px 3px;
+    }
+
+    /* Stars background — radial gradient dots for mobile hero */
+    .stars-bg {
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, white, transparent),
+        radial-gradient(1px 1px at 60% 70%, white, transparent),
+        radial-gradient(1px 1px at 50% 50%, white, transparent),
+        radial-gradient(1px 1px at 80% 10%, white, transparent),
+        radial-gradient(1px 1px at 90% 60%, white, transparent),
+        radial-gradient(1px 1px at 33% 80%, white, transparent),
+        radial-gradient(1px 1px at 15% 60%, white, transparent),
+        radial-gradient(1px 1px at 70% 40%, white, transparent);
+      background-size: 200% 200%, 180% 180%, 250% 250%, 220% 220%, 190% 190%, 240% 240%, 210% 210%, 230% 230%;
+      background-position: 0% 0%, 40% 40%, 60% 60%, 20% 20%, 80% 80%, 30% 30%, 70% 70%, 50% 50%;
+      opacity: 0.3;
+    }
+
+    /* Blinking terminal cursor */
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .cursor-blink {
+      animation: blink 1s step-end infinite;
+    }
+
+    /* Pulse animation for status dots */
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .pulse-dot {
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    .pulse-dot-delayed-1 {
+      animation: pulse-dot 2s ease-in-out 0.2s infinite;
+    }
+    .pulse-dot-delayed-2 {
+      animation: pulse-dot 2s ease-in-out 0.4s infinite;
+    }
+
+    /* Fade-in animation for sections on scroll */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .fade-in-up.visible {
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* ASCII rain canvas — positioned behind hero content */
+    #ascii-rain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Image overlay treatment per CLAUDE.md */
+    .project-image-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+    .project-image-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+
+    /* Timeline connector line */
+    .timeline-line {
+      position: absolute;
+      left: 7px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .timeline-dot {
+      position: absolute;
+      left: 3px;
+      top: 24px;
+      width: 9px;
+      height: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: #000;
+      z-index: 1;
+    }
+
+    /* Layered, color-tinted shadow for elevated cards */
+    .card-shadow-hover {
+      box-shadow:
+        0 0 15px rgba(255, 255, 255, 0.03),
+        0 0 30px rgba(255, 255, 255, 0.02),
+        0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+
+<body class="font-body antialiased">
+
+  <!-- ============================================
+       GLOBAL: Fixed Top Header Bar
+       Logo/name on left, system coordinates on right.
+       Stays fixed at top of viewport as user scrolls.
+       ============================================ -->
+  <header class="fixed top-0 left-0 right-0 z-30 border-b border-white/20 bg-black/80 backdrop-blur-sm">
+    <div class="container mx-auto px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between">
+      <!-- Logo / Name -->
+      <div class="flex items-center gap-2 lg:gap-4">
+        <a href="#hero" class="font-heading text-white text-xl lg:text-2xl font-bold tracking-widest italic transform -skew-x-12
+                              transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black active:opacity-70">
+          FINN.MCM
+        </a>
+        <div class="h-3 lg:h-4 w-px bg-white/40"></div>
+        <span class="text-white/60 text-[8px] lg:text-[10px] font-body">EST. 2025</span>
+      </div>
+
+      <!-- Desktop coordinates / system clock -->
+      <div class="hidden lg:flex items-center gap-3 text-[10px] font-body text-white/60">
+        <span>SYS.TIME: <span id="sys-clock">00:00:00</span></span>
+        <div class="w-1 h-1 bg-white/40 rounded-full"></div>
+        <span>STATUS: ONLINE</span>
+      </div>
+
+      <!-- Mobile: abbreviated status -->
+      <div class="lg:hidden flex items-center gap-2 text-[8px] font-body text-white/50">
+        <div class="w-1.5 h-1.5 bg-green-400 rounded-full pulse-dot"></div>
+        <span>ONLINE</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================
+       GLOBAL: Corner Frame Accents
+       Decorative 2px borders in each viewport corner.
+       Fixed position — persist as user scrolls.
+       ============================================ -->
+  <div class="fixed top-0 left-0 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-l-2 border-white/30 z-20 pointer-events-none"></div>
+  <div class="fixed top-0 right-0 w-8 h-8 lg:w-12 lg:h-12 border-t-2 border-r-2 border-white/30 z-20 pointer-events-none"></div>
+  <div class="fixed bottom-0 left-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-l-2 border-white/30 z-20 pointer-events-none"></div>
+  <div class="fixed bottom-0 right-0 w-8 h-8 lg:w-12 lg:h-12 border-b-2 border-r-2 border-white/30 z-20 pointer-events-none"></div>
+
+  <!-- ============================================
+       GLOBAL: Fixed Bottom Footer Bar
+       System status, current section indicator,
+       rendering status with animated pulse dots.
+       ============================================ -->
+  <footer class="fixed bottom-0 left-0 right-0 z-30 border-t border-white/20 bg-black/80 backdrop-blur-sm">
+    <div class="container mx-auto px-4 lg:px-8 py-2 lg:py-3 flex items-center justify-between">
+      <!-- Left: system status -->
+      <div class="flex items-center gap-3 lg:gap-6 text-[8px] lg:text-[9px] font-body text-white/50">
+        <span class="hidden lg:inline">SYSTEM.ACTIVE</span>
+        <span class="lg:hidden">SYS.ACT</span>
+        <!-- Mini bar graph — desktop only -->
+        <div class="hidden lg:flex gap-1 items-end">
+          <div class="w-1 bg-white/30" style="height: 8px;"></div>
+          <div class="w-1 bg-white/30" style="height: 14px;"></div>
+          <div class="w-1 bg-white/30" style="height: 6px;"></div>
+          <div class="w-1 bg-white/30" style="height: 11px;"></div>
+          <div class="w-1 bg-white/30" style="height: 4px;"></div>
+          <div class="w-1 bg-white/30" style="height: 16px;"></div>
+          <div class="w-1 bg-white/30" style="height: 9px;"></div>
+          <div class="w-1 bg-white/30" style="height: 7px;"></div>
+        </div>
+        <span>V1.0.0</span>
+        <!-- Current section indicator — updated by IntersectionObserver -->
+        <span class="hidden lg:inline">SEC: <span id="current-section">HERO</span></span>
+      </div>
+
+      <!-- Right: rendering status + pulse dots -->
+      <div class="flex items-center gap-2 lg:gap-4 text-[8px] lg:text-[9px] font-body text-white/50">
+        <span class="hidden lg:inline">◐ RENDERING</span>
+        <div class="flex gap-1">
+          <div class="w-1 h-1 bg-white/60 rounded-full pulse-dot"></div>
+          <div class="w-1 h-1 bg-white/40 rounded-full pulse-dot-delayed-1"></div>
+          <div class="w-1 h-1 bg-white/20 rounded-full pulse-dot-delayed-2"></div>
+        </div>
+        <span class="hidden lg:inline">FRAME: ∞</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================
+       SECTION 1: HERO
+       Full-viewport landing section.
+       ASCII rain background on desktop, stars on mobile.
+       Content positioned right-half on desktop.
+       ============================================ -->
+  <section id="hero" data-section-name="HERO" class="relative min-h-screen overflow-hidden bg-black">
+
+    <!-- Hero: ASCII Rain Canvas (desktop only) -->
+    <canvas id="ascii-rain" class="hidden lg:block"></canvas>
+
+    <!-- Hero: Stars Background (mobile only) -->
+    <div class="absolute inset-0 w-full h-full lg:hidden stars-bg"></div>
+
+    <!-- Hero: Main Content Block — two-column: bio left, headshot right -->
+    <div class="relative z-10 flex min-h-screen items-center pt-16 lg:pt-0">
+      <div class="container mx-auto px-6 lg:px-16">
+        <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+
+          <!-- Left Column: Bio / Name / CTA -->
+          <div class="w-full lg:w-3/5 order-2 lg:order-1">
+            <div class="max-w-2xl">
+
+              <!-- Top decorative infinity divider -->
+              <div class="flex items-center gap-2 mb-4 opacity-60">
+                <div class="w-8 h-px bg-white"></div>
+                <span class="text-white text-sm font-body tracking-wider">∞</span>
+                <div class="flex-1 h-px bg-white"></div>
+              </div>
+
+              <!-- Hero heading with dithered accent bar -->
+              <div class="relative">
+                <div class="hidden lg:block absolute -right-3 top-0 bottom-0 w-1 dither-pattern opacity-40"></div>
+                <h1 class="text-4xl lg:text-7xl font-bold text-white mb-4 lg:mb-5 leading-tight font-heading tracking-widest" style="letter-spacing: 0.1em;">
+                  FINN MCMILLAN
+                </h1>
+              </div>
+
+              <!-- Decorative dots row — desktop only -->
+              <div class="hidden lg:flex gap-1 mb-4 opacity-40" aria-hidden="true">
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+                <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+              </div>
+
+              <!-- Expanded bio / tagline -->
+              <div class="relative">
+                <p class="text-sm lg:text-xl text-gray-300 mb-3 font-body opacity-90" style="line-height: 1.7;">
+                  Software Developer · Problem Solver · Student
+                </p>
+                <p class="text-xs lg:text-base text-gray-400 mb-6 lg:mb-8 font-body opacity-70" style="line-height: 1.7;">
+                  Passionate about building clean, efficient software and solving complex problems. Currently studying Computer Science and always looking for the next challenge — one commit at a time.
+                </p>
+                <!-- Technical corner accent — desktop only -->
+                <div class="hidden lg:block absolute -left-4 top-1/2 w-3 h-3 border border-white opacity-30" style="transform: translateY(-50%);">
+                  <div class="absolute top-1/2 left-1/2 w-1 h-1 bg-white" style="transform: translate(-50%, -50%);"></div>
+                </div>
+              </div>
+
+              <!-- CTA Buttons with full interactive states -->
+              <div class="flex flex-col sm:flex-row gap-3 lg:gap-4">
+                <!-- Primary CTA: View Projects -->
+                <a href="#projects" class="relative px-5 lg:px-7 py-2 lg:py-3 bg-transparent text-white font-heading text-sm lg:text-lg border border-white
+                                           transition-colors duration-200 transition-transform duration-200
+                                           hover:bg-white hover:text-black
+                                           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                                           active:scale-95 active:opacity-90
+                                           text-center group">
+                  <!-- Hover corner accents — desktop only -->
+                  <span class="hidden lg:block absolute -top-1 -left-1 w-2 h-2 border-t border-l border-white opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+                  <span class="hidden lg:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-white opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+                  VIEW PROJECTS
+                </a>
+                <!-- Secondary CTA: Contact -->
+                <a href="#contact" class="relative px-5 lg:px-7 py-2 lg:py-3 bg-transparent text-white font-heading text-sm lg:text-lg border border-white/60
+                                          transition-colors duration-200 transition-transform duration-200
+                                          hover:bg-white hover:text-black hover:border-white
+                                          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                                          active:scale-95 active:opacity-90
+                                          text-center">
+                  CONTACT ME
+                </a>
+              </div>
+
+              <!-- Bottom technical notation — desktop only -->
+              <div class="hidden lg:flex items-center gap-2 mt-8 opacity-40">
+                <span class="text-white text-xs font-body">∞</span>
+                <div class="flex-1 h-px bg-white"></div>
+                <span class="text-white text-xs font-body">PORTFOLIO.PROTOCOL</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Headshot -->
+          <div class="w-full lg:w-2/5 order-1 lg:order-2 flex justify-center lg:justify-end">
+            <div class="relative">
+              <!-- Decorative corner frame around headshot -->
+              <div class="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-white/40"></div>
+              <div class="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-white/40"></div>
+              <div class="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-white/40"></div>
+              <div class="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-white/40"></div>
+              <!-- Headshot image with overlay treatment -->
+              <div class="project-image-wrapper w-48 h-48 sm:w-56 sm:h-56 lg:w-72 lg:h-72">
+                <img src="brand_assets/IMG_8678 2.jpg" alt="Finn McMillan headshot" class="w-full h-full object-cover grayscale" />
+              </div>
+              <!-- Label under photo -->
+              <div class="text-center mt-3 text-[10px] lg:text-xs font-body text-white/40 tracking-widest">
+                [HEADSHOT.IMG]
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SECTION DIVIDER: HERO → WORK
+       ASCII-styled horizontal rule with section label
+       ============================================ -->
+  <div class="relative py-12 lg:py-16 bg-black" aria-hidden="true">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="flex items-center gap-3 justify-center">
+        <div class="flex-1 h-px bg-white/15"></div>
+        <span class="text-white/30 text-[9px] font-body tracking-widest">∞</span>
+        <span class="text-white/20 text-[9px] font-body tracking-widest">WORK.LOG_INIT</span>
+        <span class="text-white/30 text-[9px] font-body tracking-widest">∞</span>
+        <div class="flex-1 h-px bg-white/15"></div>
+      </div>
+      <!-- Decorative dot row -->
+      <div class="flex gap-1 justify-center mt-3 opacity-20">
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================
+       SECTION 2: WORK EXPERIENCE (WORK.LOG)
+       Terminal log entry cards with timeline connector.
+       Each job rendered as a bordered "log entry" card.
+       ============================================ -->
+  <section id="experience" data-section-name="WORK.LOG" class="relative bg-black py-16 lg:py-24">
+    <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+
+      <!-- Section header with blinking cursor -->
+      <div class="mb-10 lg:mb-14 fade-in-up">
+        <span class="text-white/40 text-[10px] font-body tracking-widest block mb-2">// PROFESSIONAL HISTORY</span>
+        <h2 class="text-xl lg:text-3xl font-bold text-white font-heading tracking-widest">
+          &gt; WORK.LOG<span class="cursor-blink text-white/60">_</span>
+        </h2>
+      </div>
+
+      <!-- Timeline container — vertical line + job cards -->
+      <div class="relative pl-8 lg:pl-10">
+        <!-- Timeline vertical connector line -->
+        <div class="timeline-line"></div>
+
+        <!-- ---- Job Entry 1 ---- -->
+        <div class="relative mb-10 lg:mb-14 fade-in-up">
+          <!-- Timeline dot -->
+          <div class="timeline-dot"></div>
+          <!-- Card -->
+          <div class="border border-white/20 p-5 lg:p-6 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover">
+            <!-- Card header: ID + dates -->
+            <div class="flex items-center justify-between mb-3 text-[10px] lg:text-xs font-body text-white/50">
+              <span>[JOB_ID: 001]</span>
+              <span>2025 — PRESENT</span>
+            </div>
+            <!-- Role + Org -->
+            <div class="mb-4 space-y-1">
+              <div class="text-sm lg:text-base font-heading text-white tracking-wider">
+                ROLE: <span class="text-white/90">Software Engineer Intern</span>
+              </div>
+              <div class="text-xs lg:text-sm font-body text-white/60">
+                ORG: &nbsp;TechCorp Industries
+              </div>
+            </div>
+            <!-- Separator -->
+            <div class="h-px bg-white/10 mb-4"></div>
+            <!-- Bullet points styled as terminal output -->
+            <div class="space-y-2 text-xs lg:text-sm font-body text-white/70" style="line-height: 1.7;">
+              <p>&gt; Developed and maintained RESTful APIs serving 10K+ daily requests</p>
+              <p>&gt; Implemented CI/CD pipeline reducing deployment time by 40%</p>
+              <p>&gt; Collaborated with cross-functional team of 8 engineers</p>
+            </div>
+            <!-- Status tag -->
+            <div class="mt-4 flex items-center gap-2 text-[10px] font-body text-white/40">
+              <div class="w-1.5 h-1.5 bg-green-400/60 rounded-full"></div>
+              <span>STATUS: ACTIVE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- Job Entry 2 ---- -->
+        <div class="relative mb-10 lg:mb-14 fade-in-up">
+          <div class="timeline-dot"></div>
+          <div class="border border-white/20 p-5 lg:p-6 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover">
+            <div class="flex items-center justify-between mb-3 text-[10px] lg:text-xs font-body text-white/50">
+              <span>[JOB_ID: 002]</span>
+              <span>2024 — 2025</span>
+            </div>
+            <div class="mb-4 space-y-1">
+              <div class="text-sm lg:text-base font-heading text-white tracking-wider">
+                ROLE: <span class="text-white/90">Research Assistant</span>
+              </div>
+              <div class="text-xs lg:text-sm font-body text-white/60">
+                ORG: &nbsp;University CS Department
+              </div>
+            </div>
+            <div class="h-px bg-white/10 mb-4"></div>
+            <div class="space-y-2 text-xs lg:text-sm font-body text-white/70" style="line-height: 1.7;">
+              <p>&gt; Conducted research on distributed systems optimization</p>
+              <p>&gt; Published findings in department technical review</p>
+              <p>&gt; Built data processing pipeline handling 500GB+ datasets</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2 text-[10px] font-body text-white/40">
+              <span>STATUS: COMPLETE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- Job Entry 3 ---- -->
+        <div class="relative fade-in-up">
+          <div class="timeline-dot"></div>
+          <div class="border border-white/20 p-5 lg:p-6 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover">
+            <div class="flex items-center justify-between mb-3 text-[10px] lg:text-xs font-body text-white/50">
+              <span>[JOB_ID: 003]</span>
+              <span>2023 — 2024</span>
+            </div>
+            <div class="mb-4 space-y-1">
+              <div class="text-sm lg:text-base font-heading text-white tracking-wider">
+                ROLE: <span class="text-white/90">Freelance Web Developer</span>
+              </div>
+              <div class="text-xs lg:text-sm font-body text-white/60">
+                ORG: &nbsp;Self-Employed
+              </div>
+            </div>
+            <div class="h-px bg-white/10 mb-4"></div>
+            <div class="space-y-2 text-xs lg:text-sm font-body text-white/70" style="line-height: 1.7;">
+              <p>&gt; Designed and delivered 12+ client websites</p>
+              <p>&gt; Achieved 95+ Lighthouse performance scores</p>
+              <p>&gt; Managed end-to-end project lifecycle and client communication</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2 text-[10px] font-body text-white/40">
+              <span>STATUS: COMPLETE</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SECTION DIVIDER: WORK → EDUCATION
+       ============================================ -->
+  <div class="relative py-12 lg:py-16 bg-black" aria-hidden="true">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="flex items-center gap-3 justify-center">
+        <div class="flex-1 h-px bg-white/15"></div>
+        <span class="text-white/30 text-[9px] font-body tracking-widest">∞</span>
+        <span class="text-white/20 text-[9px] font-body tracking-widest">EDU.RECORD_INIT</span>
+        <span class="text-white/30 text-[9px] font-body tracking-widest">∞</span>
+        <div class="flex-1 h-px bg-white/15"></div>
+      </div>
+      <div class="flex gap-1 justify-center mt-3 opacity-20">
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================
+       SECTION 3: EDUCATION (EDU.RECORD)
+       System specs readout style.
+       Uses Unicode box-drawing characters for borders
+       rendered inside pre/code blocks for alignment.
+       Side-by-side on desktop, stacked on mobile.
+       ============================================ -->
+  <section id="education" data-section-name="EDU.RECORD" class="relative bg-black py-16 lg:py-24">
+    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+
+      <!-- Section header -->
+      <div class="mb-10 lg:mb-14 fade-in-up">
+        <span class="text-white/40 text-[10px] font-body tracking-widest block mb-2">// ACADEMIC HISTORY</span>
+        <h2 class="text-xl lg:text-3xl font-bold text-white font-heading tracking-widest">
+          &gt; EDU.RECORD<span class="cursor-blink text-white/60">_</span>
+        </h2>
+      </div>
+
+      <!-- Education cards grid — 1 col mobile, 2 col desktop -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+
+        <!-- ---- Education Entry 1 ---- -->
+        <div class="border border-white/20 p-5 lg:p-6 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover fade-in-up">
+          <!-- Spec-style field readout -->
+          <div class="space-y-2 text-xs lg:text-sm font-body">
+            <div class="flex">
+              <span class="text-white/50 w-28 lg:w-32 shrink-0">INSTITUTION:</span>
+              <span class="text-white/90">State University</span>
+            </div>
+            <div class="flex">
+              <span class="text-white/50 w-28 lg:w-32 shrink-0">PROGRAM:</span>
+              <span class="text-white/90">B.S. Computer Science</span>
+            </div>
+            <div class="flex">
+              <span class="text-white/50 w-28 lg:w-32 shrink-0">PERIOD:</span>
+              <span class="text-white/90">2022 — 2026</span>
+            </div>
+            <div class="flex items-center">
+              <span class="text-white/50 w-28 lg:w-32 shrink-0">STATUS:</span>
+              <span class="text-white/90 flex items-center gap-2">IN_PROGRESS <span class="text-white/50">◐</span></span>
+            </div>
+          </div>
+          <!-- Separator -->
+          <div class="h-px bg-white/10 my-4"></div>
+          <!-- Coursework / modules loaded -->
+          <div class="text-xs font-body text-white/50 mb-2">MODULES.LOADED:</div>
+          <div class="space-y-1 text-xs lg:text-sm font-body text-white/70" style="line-height: 1.7;">
+            <p>&gt; Data Structures &amp; Algorithms</p>
+            <p>&gt; Operating Systems</p>
+            <p>&gt; Database Systems</p>
+            <p>&gt; Software Engineering</p>
+            <p>&gt; Computer Networks</p>
+          </div>
+          <!-- GPA -->
+          <div class="mt-4 text-[10px] font-body text-white/40">
+            GPA: 3.8 / 4.0
+          </div>
+        </div>
+
+        <!-- ---- Education Entry 2 ---- -->
+        <div class="border border-white/20 p-5 lg:p-6 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover fade-in-up">
+          <div class="space-y-2 text-xs lg:text-sm font-body">
+            <div class="flex">
+              <span class="text-white/50 w-28 lg:w-32 shrink-0">INSTITUTION:</span>
+              <span class="text-white/90">Community College</span>
+            </div>
+            <div class="flex">
+              <span class="text-white/50 w-28 lg:w-32 shrink-0">PROGRAM:</span>
+              <span class="text-white/90">A.S. Mathematics</span>
+            </div>
+            <div class="flex">
+              <span class="text-white/50 w-28 lg:w-32 shrink-0">PERIOD:</span>
+              <span class="text-white/90">2020 — 2022</span>
+            </div>
+            <div class="flex items-center">
+              <span class="text-white/50 w-28 lg:w-32 shrink-0">STATUS:</span>
+              <span class="text-white/90">COMPLETE</span>
+            </div>
+          </div>
+          <div class="h-px bg-white/10 my-4"></div>
+          <div class="text-xs font-body text-white/50 mb-2">MODULES.LOADED:</div>
+          <div class="space-y-1 text-xs lg:text-sm font-body text-white/70" style="line-height: 1.7;">
+            <p>&gt; Calculus I–III</p>
+            <p>&gt; Linear Algebra</p>
+            <p>&gt; Discrete Mathematics</p>
+            <p>&gt; Intro to Programming</p>
+          </div>
+          <div class="mt-4 text-[10px] font-body text-white/40">
+            GPA: 3.9 / 4.0
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SECTION DIVIDER: EDUCATION → PROJECTS
+       ============================================ -->
+  <div class="relative py-12 lg:py-16 bg-black" aria-hidden="true">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="flex items-center gap-3 justify-center">
+        <div class="flex-1 h-px bg-white/15"></div>
+        <span class="text-white/30 text-[9px] font-body tracking-widest">∞</span>
+        <span class="text-white/20 text-[9px] font-body tracking-widest">PROJECT.INDEX_INIT</span>
+        <span class="text-white/30 text-[9px] font-body tracking-widest">∞</span>
+        <div class="flex-1 h-px bg-white/15"></div>
+      </div>
+      <div class="flex gap-1 justify-center mt-3 opacity-20">
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================
+       SECTION 4: PROJECTS (PROJECT.INDEX)
+       Grid of project file-cards.
+       1 col mobile, 2 col md, 3 col lg.
+       Each card has placeholder image with overlay,
+       project metadata, and a VIEW SOURCE button.
+       ============================================ -->
+  <section id="projects" data-section-name="PROJECT.INDEX" class="relative bg-black py-16 lg:py-24">
+    <div class="container mx-auto px-6 lg:px-8 max-w-6xl">
+
+      <!-- Section header -->
+      <div class="mb-10 lg:mb-14 fade-in-up">
+        <span class="text-white/40 text-[10px] font-body tracking-widest block mb-2">// SELECTED WORKS</span>
+        <h2 class="text-xl lg:text-3xl font-bold text-white font-heading tracking-widest">
+          &gt; PROJECT.INDEX<span class="cursor-blink text-white/60">_</span>
+        </h2>
+      </div>
+
+      <!-- Project cards grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- ---- Project Card 1 ---- -->
+        <div class="border border-white/20 transition-colors duration-200 transition-transform duration-200 hover:border-white/40 hover:card-shadow-hover hover:-translate-y-0.5 fade-in-up">
+          <!-- Image area with gradient overlay -->
+          <div class="project-image-wrapper">
+            <img src="https://placehold.co/600x400/111111/333333?text=PROJECT.01" alt="Project 01" class="w-full h-40 lg:h-48 object-cover" loading="lazy" />
+          </div>
+          <!-- Card body -->
+          <div class="p-4 lg:p-5">
+            <div class="space-y-1 text-xs font-body mb-3">
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">PROJECT:</span>
+                <span class="text-white/90 font-heading tracking-wider">TaskFlow</span>
+              </div>
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">TYPE:</span>
+                <span class="text-white/70">Web App</span>
+              </div>
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">STACK:</span>
+                <span class="text-white/70">React, Node, PostgreSQL</span>
+              </div>
+            </div>
+            <div class="h-px bg-white/10 mb-3"></div>
+            <p class="text-xs font-body text-white/60 mb-4" style="line-height: 1.7;">
+              &gt; Full-stack task management app with real-time collaboration, drag-and-drop kanban boards, and team analytics.
+            </p>
+            <a href="#" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
+                               transition-colors duration-200 transition-transform duration-200
+                               hover:bg-white hover:text-black hover:border-white
+                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                               active:scale-95 active:opacity-90">
+              VIEW SOURCE
+            </a>
+          </div>
+        </div>
+
+        <!-- ---- Project Card 2 ---- -->
+        <div class="border border-white/20 transition-colors duration-200 transition-transform duration-200 hover:border-white/40 hover:card-shadow-hover hover:-translate-y-0.5 fade-in-up">
+          <div class="project-image-wrapper">
+            <img src="https://placehold.co/600x400/111111/333333?text=PROJECT.02" alt="Project 02" class="w-full h-40 lg:h-48 object-cover" loading="lazy" />
+          </div>
+          <div class="p-4 lg:p-5">
+            <div class="space-y-1 text-xs font-body mb-3">
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">PROJECT:</span>
+                <span class="text-white/90 font-heading tracking-wider">CryptoTrack</span>
+              </div>
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">TYPE:</span>
+                <span class="text-white/70">Dashboard</span>
+              </div>
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">STACK:</span>
+                <span class="text-white/70">Next.js, D3, WebSocket</span>
+              </div>
+            </div>
+            <div class="h-px bg-white/10 mb-3"></div>
+            <p class="text-xs font-body text-white/60 mb-4" style="line-height: 1.7;">
+              &gt; Real-time cryptocurrency dashboard with interactive charts, portfolio tracking, and price alerts.
+            </p>
+            <a href="#" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
+                               transition-colors duration-200 transition-transform duration-200
+                               hover:bg-white hover:text-black hover:border-white
+                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                               active:scale-95 active:opacity-90">
+              VIEW SOURCE
+            </a>
+          </div>
+        </div>
+
+        <!-- ---- Project Card 3 ---- -->
+        <div class="border border-white/20 transition-colors duration-200 transition-transform duration-200 hover:border-white/40 hover:card-shadow-hover hover:-translate-y-0.5 fade-in-up">
+          <div class="project-image-wrapper">
+            <img src="https://placehold.co/600x400/111111/333333?text=PROJECT.03" alt="Project 03" class="w-full h-40 lg:h-48 object-cover" loading="lazy" />
+          </div>
+          <div class="p-4 lg:p-5">
+            <div class="space-y-1 text-xs font-body mb-3">
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">PROJECT:</span>
+                <span class="text-white/90 font-heading tracking-wider">NetScan</span>
+              </div>
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">TYPE:</span>
+                <span class="text-white/70">CLI Tool</span>
+              </div>
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">STACK:</span>
+                <span class="text-white/70">Python, asyncio, Rich</span>
+              </div>
+            </div>
+            <div class="h-px bg-white/10 mb-3"></div>
+            <p class="text-xs font-body text-white/60 mb-4" style="line-height: 1.7;">
+              &gt; Async network scanning utility with beautiful terminal output, port detection, and service fingerprinting.
+            </p>
+            <a href="#" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
+                               transition-colors duration-200 transition-transform duration-200
+                               hover:bg-white hover:text-black hover:border-white
+                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                               active:scale-95 active:opacity-90">
+              VIEW SOURCE
+            </a>
+          </div>
+        </div>
+
+        <!-- ---- Project Card 4 ---- -->
+        <div class="border border-white/20 transition-colors duration-200 transition-transform duration-200 hover:border-white/40 hover:card-shadow-hover hover:-translate-y-0.5 fade-in-up">
+          <div class="project-image-wrapper">
+            <img src="https://placehold.co/600x400/111111/333333?text=PROJECT.04" alt="Project 04" class="w-full h-40 lg:h-48 object-cover" loading="lazy" />
+          </div>
+          <div class="p-4 lg:p-5">
+            <div class="space-y-1 text-xs font-body mb-3">
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">PROJECT:</span>
+                <span class="text-white/90 font-heading tracking-wider">PixelForge</span>
+              </div>
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">TYPE:</span>
+                <span class="text-white/70">Creative Tool</span>
+              </div>
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">STACK:</span>
+                <span class="text-white/70">Canvas API, WASM, Rust</span>
+              </div>
+            </div>
+            <div class="h-px bg-white/10 mb-3"></div>
+            <p class="text-xs font-body text-white/60 mb-4" style="line-height: 1.7;">
+              &gt; Browser-based pixel art editor with layer support, custom palettes, and WASM-powered real-time filters.
+            </p>
+            <a href="#" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
+                               transition-colors duration-200 transition-transform duration-200
+                               hover:bg-white hover:text-black hover:border-white
+                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                               active:scale-95 active:opacity-90">
+              VIEW SOURCE
+            </a>
+          </div>
+        </div>
+
+        <!-- ---- Project Card 5 ---- -->
+        <div class="border border-white/20 transition-colors duration-200 transition-transform duration-200 hover:border-white/40 hover:card-shadow-hover hover:-translate-y-0.5 fade-in-up">
+          <div class="project-image-wrapper">
+            <img src="https://placehold.co/600x400/111111/333333?text=PROJECT.05" alt="Project 05" class="w-full h-40 lg:h-48 object-cover" loading="lazy" />
+          </div>
+          <div class="p-4 lg:p-5">
+            <div class="space-y-1 text-xs font-body mb-3">
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">PROJECT:</span>
+                <span class="text-white/90 font-heading tracking-wider">DevLog</span>
+              </div>
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">TYPE:</span>
+                <span class="text-white/70">Blog Engine</span>
+              </div>
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">STACK:</span>
+                <span class="text-white/70">Astro, MDX, Tailwind</span>
+              </div>
+            </div>
+            <div class="h-px bg-white/10 mb-3"></div>
+            <p class="text-xs font-body text-white/60 mb-4" style="line-height: 1.7;">
+              &gt; Minimal developer blog with MDX support, syntax highlighting, RSS feed, and sub-second page loads.
+            </p>
+            <a href="#" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
+                               transition-colors duration-200 transition-transform duration-200
+                               hover:bg-white hover:text-black hover:border-white
+                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                               active:scale-95 active:opacity-90">
+              VIEW SOURCE
+            </a>
+          </div>
+        </div>
+
+        <!-- ---- Project Card 6 ---- -->
+        <div class="border border-white/20 transition-colors duration-200 transition-transform duration-200 hover:border-white/40 hover:card-shadow-hover hover:-translate-y-0.5 fade-in-up">
+          <div class="project-image-wrapper">
+            <img src="https://placehold.co/600x400/111111/333333?text=PROJECT.06" alt="Project 06" class="w-full h-40 lg:h-48 object-cover" loading="lazy" />
+          </div>
+          <div class="p-4 lg:p-5">
+            <div class="space-y-1 text-xs font-body mb-3">
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">PROJECT:</span>
+                <span class="text-white/90 font-heading tracking-wider">ShellBot</span>
+              </div>
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">TYPE:</span>
+                <span class="text-white/70">Discord Bot</span>
+              </div>
+              <div class="flex">
+                <span class="text-white/50 w-16 shrink-0">STACK:</span>
+                <span class="text-white/70">Go, Discord API, SQLite</span>
+              </div>
+            </div>
+            <div class="h-px bg-white/10 mb-3"></div>
+            <p class="text-xs font-body text-white/60 mb-4" style="line-height: 1.7;">
+              &gt; Modular Discord bot with custom commands, moderation tools, music playback, and persistent user data.
+            </p>
+            <a href="#" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
+                               transition-colors duration-200 transition-transform duration-200
+                               hover:bg-white hover:text-black hover:border-white
+                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                               active:scale-95 active:opacity-90">
+              VIEW SOURCE
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SECTION DIVIDER: PROJECTS → CONTACT
+       ============================================ -->
+  <div class="relative py-12 lg:py-16 bg-black" aria-hidden="true">
+    <div class="container mx-auto px-6 lg:px-8">
+      <div class="flex items-center gap-3 justify-center">
+        <div class="flex-1 h-px bg-white/15"></div>
+        <span class="text-white/30 text-[9px] font-body tracking-widest">∞</span>
+        <span class="text-white/20 text-[9px] font-body tracking-widest">CONN.ESTABLISH_INIT</span>
+        <span class="text-white/30 text-[9px] font-body tracking-widest">∞</span>
+        <div class="flex-1 h-px bg-white/15"></div>
+      </div>
+      <div class="flex gap-1 justify-center mt-3 opacity-20">
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-white rounded-full"></div><div class="w-0.5 h-0.5 bg-white rounded-full"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================
+       SECTION 5: CONTACT (CONN.ESTABLISH)
+       Centered contact block with social links.
+       Terminal-style "establishing connection" copy.
+       ============================================ -->
+  <section id="contact" data-section-name="CONN.ESTABLISH" class="relative bg-black py-20 lg:py-32">
+    <div class="container mx-auto px-6 lg:px-8 max-w-2xl text-center">
+
+      <div class="fade-in-up">
+        <!-- Terminal-style connection text -->
+        <div class="space-y-2 mb-8 lg:mb-10">
+          <p class="text-xs lg:text-sm font-body text-white/50">&gt; ESTABLISHING CONNECTION...</p>
+          <p class="text-xs lg:text-sm font-body text-white/50">&gt; HANDSHAKE COMPLETE</p>
+          <p class="text-lg lg:text-2xl font-heading text-white tracking-widest mt-4">&gt; READY TO COLLABORATE</p>
+        </div>
+
+        <!-- Contact / social links -->
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+          <!-- Email -->
+          <a href="mailto:finn@example.com" class="relative px-5 lg:px-6 py-2 lg:py-2.5 bg-transparent text-white font-heading text-xs lg:text-sm border border-white
+                                                    transition-colors duration-200 transition-transform duration-200
+                                                    hover:bg-white hover:text-black
+                                                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                                                    active:scale-95 active:opacity-90
+                                                    group">
+            <span class="hidden lg:block absolute -top-1 -left-1 w-2 h-2 border-t border-l border-white opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+            <span class="hidden lg:block absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-white opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+            EMAIL
+          </a>
+          <!-- GitHub -->
+          <a href="#" class="relative px-5 lg:px-6 py-2 lg:py-2.5 bg-transparent text-white font-heading text-xs lg:text-sm border border-white/60
+                             transition-colors duration-200 transition-transform duration-200
+                             hover:bg-white hover:text-black hover:border-white
+                             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                             active:scale-95 active:opacity-90">
+            GITHUB
+          </a>
+          <!-- LinkedIn -->
+          <a href="#" class="relative px-5 lg:px-6 py-2 lg:py-2.5 bg-transparent text-white font-heading text-xs lg:text-sm border border-white/60
+                             transition-colors duration-200 transition-transform duration-200
+                             hover:bg-white hover:text-black hover:border-white
+                             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                             active:scale-95 active:opacity-90">
+            LINKEDIN
+          </a>
+        </div>
+
+        <!-- End transmission divider -->
+        <div class="flex items-center gap-3 justify-center mt-12 lg:mt-16 opacity-30">
+          <div class="w-16 lg:w-24 h-px bg-white"></div>
+          <span class="text-[9px] font-body text-white tracking-widest">∞</span>
+          <span class="text-[9px] font-body text-white tracking-widest">END.TRANSMISSION</span>
+          <span class="text-[9px] font-body text-white tracking-widest">∞</span>
+          <div class="w-16 lg:w-24 h-px bg-white"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spacer for fixed footer -->
+  <div class="h-10 bg-black"></div>
+
+
+  <!-- ============================================
+       JAVASCRIPT
+       1. System clock updater (header)
+       2. ASCII rain canvas animation (hero background)
+       3. IntersectionObserver for section tracking (footer)
+       4. Scroll-triggered fade-in animations
+       ============================================ -->
+  <script>
+    // ---- 1. System Clock ----
+    // Updates the SYS.TIME display in the header every second
+    (function initClock() {
+      const clockEl = document.getElementById('sys-clock');
+      function updateClock() {
+        const now = new Date();
+        const h = String(now.getHours()).padStart(2, '0');
+        const m = String(now.getMinutes()).padStart(2, '0');
+        const s = String(now.getSeconds()).padStart(2, '0');
+        clockEl.textContent = h + ':' + m + ':' + s;
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+    })();
+
+
+    // ---- 2. ASCII Rain Animation ----
+    // Matrix-style falling ASCII characters on the hero canvas.
+    // Only runs on desktop (canvas is hidden on mobile via CSS).
+    (function initAsciiRain() {
+      const canvas = document.getElementById('ascii-rain');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      const chars = '∞◐+-.:|;*#@&01'.split('');
+      const fontSize = 14;
+      let columns = 0;
+      let drops = [];
+
+      // Resize canvas to match hero section dimensions
+      function resize() {
+        const hero = document.getElementById('hero');
+        canvas.width = hero.offsetWidth;
+        canvas.height = hero.offsetHeight;
+        columns = Math.floor(canvas.width / fontSize);
+        // Preserve existing drop positions, initialize new ones
+        const newDrops = [];
+        for (let i = 0; i < columns; i++) {
+          newDrops[i] = drops[i] || Math.random() * -100;
+        }
+        drops = newDrops;
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+
+      // Draw one frame of the rain animation
+      function draw() {
+        // Semi-transparent black overlay creates the trail/fade effect
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = fontSize + 'px "VT323", monospace';
+
+        for (let i = 0; i < columns; i++) {
+          // Random character from the set
+          const char = chars[Math.floor(Math.random() * chars.length)];
+          // Vary opacity per column for depth
+          const opacity = 0.04 + Math.random() * 0.08;
+          ctx.fillStyle = 'rgba(255, 255, 255, ' + opacity + ')';
+          ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+          // Reset drop to top when it falls off screen, with randomness
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i] += 0.5 + Math.random() * 0.5;
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+
+      // Fade canvas out as user scrolls past the hero section
+      window.addEventListener('scroll', function () {
+        const hero = document.getElementById('hero');
+        const scrollY = window.scrollY;
+        const heroHeight = hero.offsetHeight;
+        // Calculate opacity: fully visible at top, fades to 0 by end of hero
+        const opacity = Math.max(0, 1 - scrollY / (heroHeight * 0.8));
+        canvas.style.opacity = opacity;
+      }, { passive: true });
+    })();
+
+
+    // ---- 3. Section Tracking (IntersectionObserver) ----
+    // Updates the "SEC: XXXX" label in the footer as the user scrolls
+    (function initSectionTracker() {
+      const sectionLabel = document.getElementById('current-section');
+      if (!sectionLabel) return;
+
+      const sections = document.querySelectorAll('section[data-section-name]');
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            sectionLabel.textContent = entry.target.dataset.sectionName;
+          }
+        });
+      }, {
+        // Trigger when at least 20% of the section is visible
+        threshold: 0.2,
+        rootMargin: '-10% 0px -10% 0px'
+      });
+
+      sections.forEach(function (section) {
+        observer.observe(section);
+      });
+    })();
+
+
+    // ---- 4. Scroll-Triggered Fade-In Animations ----
+    // Elements with class "fade-in-up" become visible when scrolled into view
+    (function initFadeInAnimations() {
+      const elements = document.querySelectorAll('.fade-in-up');
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            // Stagger animations for sibling elements
+            const siblings = entry.target.parentElement.querySelectorAll('.fade-in-up');
+            let delay = 0;
+            siblings.forEach(function (sib) {
+              if (sib.classList.contains('visible')) return;
+              if (sib === entry.target || sib.getBoundingClientRect().top < window.innerHeight) {
+                sib.style.animationDelay = delay + 'ms';
+                sib.classList.add('visible');
+                delay += 100;
+              }
+            });
+            // Ensure the triggering element is always made visible
+            if (!entry.target.classList.contains('visible')) {
+              entry.target.classList.add('visible');
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      elements.forEach(function (el) {
+        observer.observe(el);
+      });
+    })();
+  </script>
+
+</body>
+</html>
