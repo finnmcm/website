@@ -1,3 +1,0 @@
-Bio (replacing 'Passionate about building clean...'): Current sophomore at Northwestern University studying Computer Science, with a primary interest in Operating Systems and low-latency development. Feel free to explore my projects below, or reach out!
-Languages:
-Coursework: Data Structures, Operating Systems, Kernel Development, Advanced Algorithms, Graph Theory, Linear Algebra, Machine Learning
