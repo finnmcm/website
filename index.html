@@ -248,6 +248,21 @@
         animation: none;
       }
     }
+
+    /* Work card org logo — stretches to match the ROLE + ORG text block height,
+       width scales proportionally via object-contain */
+    .work-card-logo {
+      max-width: 6rem;
+    }
+
+    /* Normalized language icon sizing for the PORTFOLIO.PROTOCOL skills row */
+    .language-skill-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      object-fit: contain;
+      display: block;
+      opacity: 0.9;
+    }
   </style>
 </head>
 
@@ -415,7 +430,7 @@
               <!-- Bio -->
               <div class="relative">
                 <p class="text-xs lg:text-base text-gray-300 mb-6 lg:mb-8 font-body opacity-80" style="line-height: 1.7;">
-                  Current sophomore at Northwestern University studying Computer Science, with a primary interest in Operating Systems and low-latency development. Feel free to explore my projects below, or reach out!
+                  Current sophomore at Northwestern University studying Computer Science, specializing in Operating Systems and low-latency development in C++. Feel free to explore my projects below, or reach out!
                 </p>
                 <!-- Technical corner accent — desktop only -->
                 <div class="hidden lg:block absolute -left-4 top-1/2 w-3 h-3 border border-white opacity-30" style="transform: translateY(-50%);">
@@ -461,10 +476,23 @@
 
                 <!-- Skills -->
                 <div class="mb-3">
-                  <span class="text-white/50 text-[10px] lg:text-xs font-body tracking-widest">SKILLS:</span>
-                  <p class="text-white/70 text-xs lg:text-sm font-body mt-1" style="line-height: 1.7;">
-                    C · C++ · Python · Java · Swift · TypeScript · SQL
-                  </p>
+                  <span class="text-white/50 text-[10px] lg:text-xs font-body tracking-widest">LANGUAGES:</span>
+                  <!-- Language icons replace text labels; each icon uses normalized dimensions -->
+                  <div class="mt-2 flex items-center gap-3 flex-wrap">
+                    <img src="brand_assets/C_icon.png" alt="C" class="language-skill-icon" />
+                    <span class="text-white/45 text-[10px] lg:text-xs leading-none">·</span>
+                    <img src="brand_assets/C++_icon.png" alt="C++" class="language-skill-icon" />
+                    <span class="text-white/45 text-[10px] lg:text-xs leading-none">·</span>
+                    <img src="brand_assets/python_icon.png" alt="Python" class="language-skill-icon" />
+                    <span class="text-white/45 text-[10px] lg:text-xs leading-none">·</span>
+                    <img src="brand_assets/java_icon.png" alt="Java" class="language-skill-icon" />
+                    <span class="text-white/45 text-[10px] lg:text-xs leading-none">·</span>
+                    <img src="brand_assets/swift_icon.png" alt="Swift" class="language-skill-icon" />
+                    <span class="text-white/45 text-[10px] lg:text-xs leading-none">·</span>
+                    <img src="brand_assets/typescript_icon.png" alt="TypeScript" class="language-skill-icon" />
+                    <span class="text-white/45 text-[10px] lg:text-xs leading-none">·</span>
+                    <img src="brand_assets/sql_icon.png" alt="SQL" class="language-skill-icon" />
+                  </div>
                 </div>
 
                 <!-- Separator -->
@@ -562,7 +590,7 @@
        Each job rendered as a bordered "log entry" card.
        ============================================ -->
   <section id="experience" data-section-name="WORK.LOG" class="relative bg-black py-16 lg:py-24">
-    <div class="container mx-auto px-6 lg:px-8 max-w-3xl">
+    <div class="container mx-auto px-6 lg:px-8 max-w-[60rem]">
 
       <!-- Section header with blinking cursor -->
       <div class="mb-10 lg:mb-14 fade-in-up">
@@ -577,93 +605,167 @@
         <!-- Timeline vertical connector line -->
         <div class="timeline-line"></div>
 
-        <!-- ---- Job Entry 1 ---- -->
+        <!-- ---- Job Entry 1: Lumafield ---- -->
         <div class="relative mb-10 lg:mb-14 fade-in-up">
           <!-- Timeline dot -->
           <div class="timeline-dot"></div>
           <!-- Card -->
           <div class="border border-white/20 p-5 lg:p-6 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover">
             <!-- Card header: ID + dates -->
-            <div class="flex items-center justify-between mb-3 text-[10px] lg:text-xs font-body text-white/50">
+            <div class="flex items-center justify-between mb-3 text-[15px] lg:text-[18px] font-body text-white/50">
               <span>[JOB_ID: 001]</span>
-              <span>2025 — PRESENT</span>
+              <span>JUN 2026 — AUG 2026</span>
             </div>
-            <!-- Role + Org -->
-            <div class="mb-4 space-y-1">
-              <div class="text-sm lg:text-base font-heading text-white tracking-wider">
-                ROLE: <span class="text-white/90">Software Engineer Intern</span>
+            <!-- Role + Org with logo -->
+            <div class="mb-4 flex items-stretch justify-between">
+              <!-- Text block -->
+              <div class="space-y-1">
+                <div class="text-[21px] lg:text-[24px] font-heading text-white tracking-wider">
+                  ORG: <span class="text-white/90">Lumafield</span>
+                </div>
+                <div class="text-[18px] lg:text-[21px] font-body text-white/60">
+                  ROLE: &nbsp;Software Engineer Intern
+                </div>
               </div>
-              <div class="text-xs lg:text-sm font-body text-white/60">
-                ORG: &nbsp;TechCorp Industries
-              </div>
+              <!-- Org logo — height matches combined ROLE + ORG text block -->
+              <img src="brand_assets/lumafield_logo.png" alt="Lumafield logo" class="object-contain ml-4 work-card-logo invert" style="max-width: 9rem;" />
             </div>
             <!-- Separator -->
             <div class="h-px bg-white/10 mb-4"></div>
             <!-- Bullet points styled as terminal output -->
-            <div class="space-y-2 text-xs lg:text-sm font-body text-white/70" style="line-height: 1.7;">
-              <p>&gt; Developed and maintained RESTful APIs serving 10K+ daily requests</p>
-              <p>&gt; Implemented CI/CD pipeline reducing deployment time by 40%</p>
-              <p>&gt; Collaborated with cross-functional team of 8 engineers</p>
+            <div class="space-y-2 text-[18px] lg:text-[21px] font-body text-white/70" style="line-height: 1.7;">
+              <p>&gt; Contributing to the development of the CUDA LEAP framework in C++ for Lumafield's Neptune CT Scanner</p>
             </div>
-            <!-- Status tag -->
-            <div class="mt-4 flex items-center gap-2 text-[10px] font-body text-white/40">
-              <div class="w-1.5 h-1.5 bg-green-400/60 rounded-full"></div>
+            <!-- Status tag — incoming: amber dot -->
+            <div class="mt-4 flex items-center gap-2 text-[15px] font-body text-white/40">
+              <div class="w-1.5 h-1.5 bg-yellow-400/60 rounded-full pulse-dot"></div>
+              <span>STATUS: INCOMING</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- Job Entry 2: KBR — TOWR-S Team ---- -->
+        <div class="relative mb-10 lg:mb-14 fade-in-up">
+          <!-- Timeline dot -->
+          <div class="timeline-dot"></div>
+          <!-- Card -->
+          <div class="border border-white/20 p-5 lg:p-6 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover">
+            <!-- Card header: ID + dates -->
+            <div class="flex items-center justify-between mb-3 text-[15px] lg:text-[18px] font-body text-white/50">
+              <span>[JOB_ID: 002]</span>
+              <span>MAR 2026 — PRESENT</span>
+            </div>
+            <!-- Role + Org with logo -->
+            <div class="mb-4 flex items-stretch justify-between">
+              <div class="space-y-1">
+                <div class="text-[21px] lg:text-[24px] font-heading text-white tracking-wider">
+                  ORG: <span class="text-white/90">KBR — TOWR-S Team</span>
+                </div>
+                <div class="text-[18px] lg:text-[21px] font-body text-white/60">
+                  ROLE: &nbsp;Software Engineer Intern
+                </div>
+              </div>
+              <img src="brand_assets/kbr_logo.png" alt="KBR logo" class="object-contain ml-4 work-card-logo" />
+            </div>
+            <!-- Separator -->
+            <div class="h-px bg-white/10 mb-4"></div>
+            <!-- Bullet points styled as terminal output -->
+            <div class="space-y-2 text-[18px] lg:text-[21px] font-body text-white/70" style="line-height: 1.7;">
+              <p>&gt; Joining the TOWR-S satellite operations team, enhancing reliability and throughput of atmospheric data pipelines</p>
+            </div>
+            <!-- Status tag — active: green pulse dot -->
+            <div class="mt-4 flex items-center gap-2 text-[15px] font-body text-white/40">
+              <div class="w-1.5 h-1.5 bg-green-400/60 rounded-full pulse-dot"></div>
               <span>STATUS: ACTIVE</span>
             </div>
           </div>
         </div>
 
-        <!-- ---- Job Entry 2 ---- -->
+        <!-- ---- Job Entry 2: TremTrak ---- -->
         <div class="relative mb-10 lg:mb-14 fade-in-up">
           <div class="timeline-dot"></div>
           <div class="border border-white/20 p-5 lg:p-6 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover">
-            <div class="flex items-center justify-between mb-3 text-[10px] lg:text-xs font-body text-white/50">
-              <span>[JOB_ID: 002]</span>
-              <span>2024 — 2025</span>
+            <div class="flex items-center justify-between mb-3 text-[15px] lg:text-[18px] font-body text-white/50">
+              <span>[JOB_ID: 003]</span>
+              <span>MAR 2025 — AUG 2025</span>
             </div>
             <div class="mb-4 space-y-1">
-              <div class="text-sm lg:text-base font-heading text-white tracking-wider">
-                ROLE: <span class="text-white/90">Research Assistant</span>
+              <div class="text-[21px] lg:text-[24px] font-heading text-white tracking-wider">
+                ORG: <span class="text-white/90">TremTrak</span>
               </div>
-              <div class="text-xs lg:text-sm font-body text-white/60">
-                ORG: &nbsp;University CS Department
+              <div class="text-[18px] lg:text-[21px] font-body text-white/60">
+                ROLE: &nbsp;Software Engineer Intern
               </div>
             </div>
             <div class="h-px bg-white/10 mb-4"></div>
-            <div class="space-y-2 text-xs lg:text-sm font-body text-white/70" style="line-height: 1.7;">
-              <p>&gt; Conducted research on distributed systems optimization</p>
-              <p>&gt; Published findings in department technical review</p>
-              <p>&gt; Built data processing pipeline handling 500GB+ datasets</p>
+            <div class="space-y-2 text-[18px] lg:text-[21px] font-body text-white/70" style="line-height: 1.7;">
+              <p>&gt; Engineered VGG19 Deep Learning model for Parkinson's detection using PyTorch, achieving 95% accuracy</p>
+              <p>&gt; Implemented voice activity detection model in Python, attaining 98% accuracy using wavelet scattering methods</p>
+              <p>&gt; Supported model hosting and RESTful requests for product website, leveraging Flask, AWS S3, and JavaScript</p>
             </div>
-            <div class="mt-4 flex items-center gap-2 text-[10px] font-body text-white/40">
+            <div class="mt-4 flex items-center gap-2 text-[15px] font-body text-white/40">
               <span>STATUS: COMPLETE</span>
             </div>
           </div>
         </div>
 
-        <!-- ---- Job Entry 3 ---- -->
+        <!-- ---- Job Entry 3: Alcov ---- -->
+        <div class="relative mb-10 lg:mb-14 fade-in-up">
+          <div class="timeline-dot"></div>
+          <div class="border border-white/20 p-5 lg:p-6 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover">
+            <div class="flex items-center justify-between mb-3 text-[15px] lg:text-[18px] font-body text-white/50">
+              <span>[JOB_ID: 004]</span>
+              <span>MAY 2024 — SEP 2024</span>
+            </div>
+            <div class="mb-4 flex items-stretch justify-between">
+              <div class="space-y-1">
+                <div class="text-[21px] lg:text-[24px] font-heading text-white tracking-wider">
+                  ORG: <span class="text-white/90">Alcov</span>
+                </div>
+                <div class="text-[18px] lg:text-[21px] font-body text-white/60">
+                  ROLE: &nbsp;Software Engineer Intern
+                </div>
+              </div>
+              <img src="brand_assets/alcov_logo.jpg" alt="Alcov logo" class="object-contain ml-4 work-card-logo" />
+            </div>
+            <div class="h-px bg-white/10 mb-4"></div>
+            <div class="space-y-2 text-[18px] lg:text-[21px] font-body text-white/70" style="line-height: 1.7;">
+              <p>&gt; Built Swift database pipelines for product offerings from top retailers, increasing customer selection size by 20%</p>
+              <p>&gt; Deployed Google Vision for automated classification of incoming products, cutting integration workload by 30%</p>
+              <p>&gt; Integrated MongoDB Atlas for rapid handling of 1,500 product offerings while supporting secure user data storage</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2 text-[15px] font-body text-white/40">
+              <span>STATUS: COMPLETE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- Job Entry 4: Boston University — Segre Lab ---- -->
         <div class="relative fade-in-up">
           <div class="timeline-dot"></div>
           <div class="border border-white/20 p-5 lg:p-6 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover">
-            <div class="flex items-center justify-between mb-3 text-[10px] lg:text-xs font-body text-white/50">
-              <span>[JOB_ID: 003]</span>
-              <span>2023 — 2024</span>
+            <div class="flex items-center justify-between mb-3 text-[15px] lg:text-[18px] font-body text-white/50">
+              <span>[JOB_ID: 005]</span>
+              <span>MAY 2023 — JAN 2024</span>
             </div>
-            <div class="mb-4 space-y-1">
-              <div class="text-sm lg:text-base font-heading text-white tracking-wider">
-                ROLE: <span class="text-white/90">Freelance Web Developer</span>
+            <div class="mb-4 flex items-stretch justify-between">
+              <div class="space-y-1">
+                <div class="text-[21px] lg:text-[24px] font-heading text-white tracking-wider">
+                  ORG: <span class="text-white/90">Boston University — Segre Lab</span>
+                </div>
+                <div class="text-[18px] lg:text-[21px] font-body text-white/60">
+                  ROLE: &nbsp;Research Intern
+                </div>
               </div>
-              <div class="text-xs lg:text-sm font-body text-white/60">
-                ORG: &nbsp;Self-Employed
-              </div>
+              <img src="brand_assets/boston_university_logo.png" alt="Boston University logo" class="object-contain ml-4 work-card-logo" style="max-width: 9rem;" />
             </div>
             <div class="h-px bg-white/10 mb-4"></div>
-            <div class="space-y-2 text-xs lg:text-sm font-body text-white/70" style="line-height: 1.7;">
-              <p>&gt; Designed and delivered 12+ client websites</p>
-              <p>&gt; Achieved 95+ Lighthouse performance scores</p>
-              <p>&gt; Managed end-to-end project lifecycle and client communication</p>
+            <div class="space-y-2 text-[18px] lg:text-[21px] font-body text-white/70" style="line-height: 1.7;">
+              <p>&gt; Designed Machine Learning algorithm to perfect bacterial growth curves using Python, Pandas, and Matplotlib</p>
+              <p>&gt; Designed simulated annealing algorithm for bacterial growth modeling in Python, boosting accuracy by 80%</p>
+              <p>&gt; Featured as co-author of bacterial modeling chapter published by Springer Nature, Methods in Molecular Biology</p>
             </div>
-            <div class="mt-4 flex items-center gap-2 text-[10px] font-body text-white/40">
+            <div class="mt-4 flex items-center gap-2 text-[15px] font-body text-white/40">
               <span>STATUS: COMPLETE</span>
             </div>
           </div>
