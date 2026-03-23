@@ -1061,7 +1061,7 @@
        Side-by-side on desktop, stacked on mobile.
        ============================================ -->
   <section id="education" data-section-name="EDU.RECORD" class="relative bg-black py-16 lg:py-24">
-    <div class="container mx-auto px-6 lg:px-8 max-w-4xl">
+    <div class="container mx-auto px-6 lg:px-8 max-w-[84rem]">
 
       <!-- Section header -->
       <div class="mb-10 lg:mb-14 fade-in-up">
@@ -1072,75 +1072,90 @@
       </div>
 
       <!-- Education cards grid — 1 col mobile, 2 col desktop -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-9 lg:gap-12">
 
         <!-- ---- Education Entry 1 ---- -->
-        <div class="border border-white/20 p-5 lg:p-6 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover fade-in-up">
+        <div class="border border-white/20 p-[1.875rem] lg:p-9 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover fade-in-up">
           <!-- Spec-style field readout -->
-          <div class="space-y-2 text-xs lg:text-sm font-body">
+          <div class="space-y-3 text-[18px] lg:text-[21px] font-body">
             <div class="flex">
-              <span class="text-white/50 w-28 lg:w-32 shrink-0">INSTITUTION:</span>
-              <span class="text-white/90">State University</span>
+              <span class="text-white/50 w-[10.5rem] lg:w-48 shrink-0">INSTITUTION:</span>
+              <span class="text-white/90">Northwestern University</span>
             </div>
             <div class="flex">
-              <span class="text-white/50 w-28 lg:w-32 shrink-0">PROGRAM:</span>
+              <span class="text-white/50 w-[10.5rem] lg:w-48 shrink-0">PROGRAM:</span>
               <span class="text-white/90">B.S. Computer Science</span>
             </div>
             <div class="flex">
-              <span class="text-white/50 w-28 lg:w-32 shrink-0">PERIOD:</span>
-              <span class="text-white/90">2022 — 2026</span>
+              <span class="text-white/50 w-[10.5rem] lg:w-48 shrink-0">PERIOD:</span>
+              <span class="text-white/90">2024 — 2028</span>
             </div>
             <div class="flex items-center">
-              <span class="text-white/50 w-28 lg:w-32 shrink-0">STATUS:</span>
+              <span class="text-white/50 w-[10.5rem] lg:w-48 shrink-0">STATUS:</span>
               <span class="text-white/90 flex items-center gap-2">IN_PROGRESS <span class="text-white/50">◐</span></span>
             </div>
           </div>
           <!-- Separator -->
-          <div class="h-px bg-white/10 my-4"></div>
+          <div class="h-px bg-white/10 my-6"></div>
           <!-- Coursework / modules loaded -->
-          <div class="text-xs font-body text-white/50 mb-2">MODULES.LOADED:</div>
-          <div class="space-y-1 text-xs lg:text-sm font-body text-white/70" style="line-height: 1.7;">
-            <p>&gt; Data Structures &amp; Algorithms</p>
-            <p>&gt; Operating Systems</p>
-            <p>&gt; Database Systems</p>
-            <p>&gt; Software Engineering</p>
-            <p>&gt; Computer Networks</p>
+          <div class="text-[18px] font-body text-white/50 mb-3">COURSEWORK:</div>
+          <!-- Two adjacent vertical stacks of courses -->
+          <div class="flex gap-6">
+            <!-- Left column: first 6 courses -->
+            <div class="space-y-1.5 text-[18px] lg:text-[21px] font-body text-white/70" style="line-height: 1.7;">
+              <p>&gt; Data Structures &amp; Algorithms</p>
+              <p>&gt; Operating Systems</p>
+              <p>&gt; Kernel Development</p>
+              <p>&gt; Linear Algebra</p>
+              <p>&gt; Discrete Mathematics</p>
+              <p>&gt; Advanced Algorithms</p>
+            </div>
+            <!-- Right column: last 7 courses -->
+            <div class="space-y-1.5 text-[18px] lg:text-[21px] font-body text-white/70" style="line-height: 1.7;">
+              <p>&gt; Graph Theory</p>
+              <p>&gt; Machine Learning</p>
+              <p>&gt; Intro to AI</p>
+              <p>&gt; Computer Systems</p>
+              <p>&gt; Human-Computer Interaction</p>
+              <p>&gt; Programming Languages</p>
+              <p>&gt; Programming in C/C++</p>
+            </div>
           </div>
           <!-- GPA -->
-          <div class="mt-4 text-[10px] font-body text-white/40">
+          <div class="mt-6 text-[15px] font-body text-white/40">
             GPA: 3.8 / 4.0
           </div>
         </div>
 
         <!-- ---- Education Entry 2 ---- -->
-        <div class="border border-white/20 p-5 lg:p-6 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover fade-in-up">
-          <div class="space-y-2 text-xs lg:text-sm font-body">
+        <div class="border border-white/20 p-[1.875rem] lg:p-9 transition-colors duration-200 hover:border-white/40 hover:card-shadow-hover fade-in-up">
+          <div class="space-y-3 text-[18px] lg:text-[21px] font-body">
             <div class="flex">
-              <span class="text-white/50 w-28 lg:w-32 shrink-0">INSTITUTION:</span>
+              <span class="text-white/50 w-[10.5rem] lg:w-48 shrink-0">INSTITUTION:</span>
               <span class="text-white/90">Community College</span>
             </div>
             <div class="flex">
-              <span class="text-white/50 w-28 lg:w-32 shrink-0">PROGRAM:</span>
+              <span class="text-white/50 w-[10.5rem] lg:w-48 shrink-0">PROGRAM:</span>
               <span class="text-white/90">A.S. Mathematics</span>
             </div>
             <div class="flex">
-              <span class="text-white/50 w-28 lg:w-32 shrink-0">PERIOD:</span>
+              <span class="text-white/50 w-[10.5rem] lg:w-48 shrink-0">PERIOD:</span>
               <span class="text-white/90">2020 — 2022</span>
             </div>
             <div class="flex items-center">
-              <span class="text-white/50 w-28 lg:w-32 shrink-0">STATUS:</span>
+              <span class="text-white/50 w-[10.5rem] lg:w-48 shrink-0">STATUS:</span>
               <span class="text-white/90">COMPLETE</span>
             </div>
           </div>
-          <div class="h-px bg-white/10 my-4"></div>
-          <div class="text-xs font-body text-white/50 mb-2">MODULES.LOADED:</div>
-          <div class="space-y-1 text-xs lg:text-sm font-body text-white/70" style="line-height: 1.7;">
+          <div class="h-px bg-white/10 my-6"></div>
+          <div class="text-[18px] font-body text-white/50 mb-3">MODULES.LOADED:</div>
+          <div class="space-y-1.5 text-[18px] lg:text-[21px] font-body text-white/70" style="line-height: 1.7;">
             <p>&gt; Calculus I–III</p>
             <p>&gt; Linear Algebra</p>
             <p>&gt; Discrete Mathematics</p>
             <p>&gt; Intro to Programming</p>
           </div>
-          <div class="mt-4 text-[10px] font-body text-white/40">
+          <div class="mt-6 text-[15px] font-body text-white/40">
             GPA: 3.9 / 4.0
           </div>
         </div>
