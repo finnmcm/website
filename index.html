@@ -157,6 +157,18 @@
       z-index: 0;
     }
 
+    /* WebGL concentric ring shader — positioned behind work.log content */
+    #worklog-shader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.3;
+    }
+
     /* WebGL chromatic wave shader — positioned behind projects content */
     #project-shader {
       position: absolute;
@@ -588,8 +600,10 @@
        Terminal log entry cards with timeline connector.
        Each job rendered as a bordered "log entry" card.
        ============================================ -->
-  <section id="experience" data-section-name="WORK.LOG" class="relative bg-black py-16 lg:py-24">
-    <div class="container mx-auto px-6 lg:px-8 max-w-[60rem]">
+  <section id="experience" data-section-name="WORK.LOG" class="relative bg-black py-16 lg:py-24 overflow-hidden">
+    <!-- WebGL concentric ring shader canvas (desktop only) -->
+    <canvas id="worklog-shader" class="hidden lg:block"></canvas>
+    <div class="container mx-auto px-6 lg:px-8 max-w-[60rem] relative z-10">
 
       <!-- Section header with blinking cursor -->
       <div class="mb-10 lg:mb-14 fade-in-up">
@@ -837,22 +851,18 @@
             <div class="space-y-1 text-xs font-body mb-3">
               <div class="flex">
                 <span class="text-white/50 w-16 shrink-0">PROJECT:</span>
-                <span class="text-white/90 font-heading tracking-wider">TaskFlow</span>
-              </div>
-              <div class="flex">
-                <span class="text-white/50 w-16 shrink-0">TYPE:</span>
-                <span class="text-white/70">Web App</span>
+                <span class="text-white/90 font-heading tracking-wider">Realtime Airport Bottleneck Predictor</span>
               </div>
               <div class="flex">
                 <span class="text-white/50 w-16 shrink-0">STACK:</span>
-                <span class="text-white/70">React, Node, PostgreSQL</span>
+                <span class="text-white/70">Python, JavaScript, Gemini, Whisper, Cerebras</span>
               </div>
             </div>
-            <div class="h-px bg-white/10 mb-3"></div>
+            <div class="h-px bg-white/10 mb-1.5"></div>
             <p class="text-xs font-body text-white/60 mb-4" style="line-height: 1.7;">
-              &gt; Full-stack task management app with real-time collaboration, drag-and-drop kanban boards, and team analytics.
+              &gt; Identifies and solves airport tarmac bottlenecks using live aircraft telemetry and ATC speech data. Utilizes Gemini, Whisper and Cerebras fast inference.
             </p>
-            <a href="#" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
+            <a href="https://github.com/romirm/pennapps" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
                                transition-colors duration-200 transition-transform duration-200
                                hover:bg-white hover:text-black hover:border-white
                                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
@@ -871,22 +881,18 @@
             <div class="space-y-1 text-xs font-body mb-3">
               <div class="flex">
                 <span class="text-white/50 w-16 shrink-0">PROJECT:</span>
-                <span class="text-white/90 font-heading tracking-wider">CryptoTrack</span>
-              </div>
-              <div class="flex">
-                <span class="text-white/50 w-16 shrink-0">TYPE:</span>
-                <span class="text-white/70">Dashboard</span>
+                <span class="text-white/90 font-heading tracking-wider">Low-Latency Order Book + Matching Engine</span>
               </div>
               <div class="flex">
                 <span class="text-white/50 w-16 shrink-0">STACK:</span>
-                <span class="text-white/70">Next.js, D3, WebSocket</span>
+                <span class="text-white/70">C++, Boost.asio, CMake</span>
               </div>
             </div>
             <div class="h-px bg-white/10 mb-3"></div>
             <p class="text-xs font-body text-white/60 mb-4" style="line-height: 1.7;">
-              &gt; Real-time cryptocurrency dashboard with interactive charts, portfolio tracking, and price alerts.
+              &gt; Multi-threaded order book and matching engine for high-frequency trading, utilizing a lock-free producer-consumer queue. 
             </p>
-            <a href="#" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
+            <a href="https://github.com/finnmcm/low-latency-orderbook-matchengine-cpp" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
                                transition-colors duration-200 transition-transform duration-200
                                hover:bg-white hover:text-black hover:border-white
                                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
@@ -905,22 +911,18 @@
             <div class="space-y-1 text-xs font-body mb-3">
               <div class="flex">
                 <span class="text-white/50 w-16 shrink-0">PROJECT:</span>
-                <span class="text-white/90 font-heading tracking-wider">NetScan</span>
-              </div>
-              <div class="flex">
-                <span class="text-white/50 w-16 shrink-0">TYPE:</span>
-                <span class="text-white/70">CLI Tool</span>
+                <span class="text-white/90 font-heading tracking-wider">Zip - College Delivery</span>
               </div>
               <div class="flex">
                 <span class="text-white/50 w-16 shrink-0">STACK:</span>
-                <span class="text-white/70">Python, asyncio, Rich</span>
+                <span class="text-white/70">Swift, PostgreSQL, Stripe, Firebase Cloud Messaging</span>
               </div>
             </div>
             <div class="h-px bg-white/10 mb-3"></div>
             <p class="text-xs font-body text-white/60 mb-4" style="line-height: 1.7;">
-              &gt; Async network scanning utility with beautiful terminal output, port detection, and service fingerprinting.
+              &gt; A fully deployed iOS app for a Northwestern-based delivery service. Supports end-to-end user payments, order tracking, and real-time notifications.
             </p>
-            <a href="#" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
+            <a href="https://github.com/finnmcm/zip" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
                                transition-colors duration-200 transition-transform duration-200
                                hover:bg-white hover:text-black hover:border-white
                                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
@@ -933,28 +935,24 @@
         <!-- ---- Project Card 4 ---- -->
         <div class="border border-white/20 transition-colors duration-200 transition-transform duration-200 hover:border-white/40 hover:card-shadow-hover hover:-translate-y-0.5 fade-in-up">
           <div class="project-image-wrapper">
-            <img src="https://placehold.co/600x400/111111/333333?text=PROJECT.04" alt="Project 04" class="w-full h-40 lg:h-48 object-cover" loading="lazy" />
+            <img src="https://placehold.co/600x400/111111/333333?text=PROJECT.05" alt="Project 05" class="w-full h-40 lg:h-48 object-cover" loading="lazy" />
           </div>
           <div class="p-4 lg:p-5">
             <div class="space-y-1 text-xs font-body mb-3">
               <div class="flex">
                 <span class="text-white/50 w-16 shrink-0">PROJECT:</span>
-                <span class="text-white/90 font-heading tracking-wider">PixelForge</span>
-              </div>
-              <div class="flex">
-                <span class="text-white/50 w-16 shrink-0">TYPE:</span>
-                <span class="text-white/70">Creative Tool</span>
+                <span class="text-white/90 font-heading tracking-wider">JudgeAI - Appellate Court Predictor</span>
               </div>
               <div class="flex">
                 <span class="text-white/50 w-16 shrink-0">STACK:</span>
-                <span class="text-white/70">Canvas API, WASM, Rust</span>
+                <span class="text-white/70">React, JavaScript, Python, FastAPI, Supabase, PostgreSQL, OpenAI</span>
               </div>
             </div>
             <div class="h-px bg-white/10 mb-3"></div>
             <p class="text-xs font-body text-white/60 mb-4" style="line-height: 1.7;">
-              &gt; Browser-based pixel art editor with layer support, custom palettes, and WASM-powered real-time filters.
+              &gt; A RAG-powered analysis tool for predicting appellate court outcomes utilizing query signal extraction, text embedding, and a vector database of past Eighth Circuit cases
             </p>
-            <a href="#" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
+            <a href="https://github.com/afrese11/JudgeAI" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
                                transition-colors duration-200 transition-transform duration-200
                                hover:bg-white hover:text-black hover:border-white
                                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
@@ -967,28 +965,24 @@
         <!-- ---- Project Card 5 ---- -->
         <div class="border border-white/20 transition-colors duration-200 transition-transform duration-200 hover:border-white/40 hover:card-shadow-hover hover:-translate-y-0.5 fade-in-up">
           <div class="project-image-wrapper">
-            <img src="https://placehold.co/600x400/111111/333333?text=PROJECT.05" alt="Project 05" class="w-full h-40 lg:h-48 object-cover" loading="lazy" />
+            <img src="https://placehold.co/600x400/111111/333333?text=PROJECT.04" alt="Project 04" class="w-full h-40 lg:h-48 object-cover" loading="lazy" />
           </div>
           <div class="p-4 lg:p-5">
             <div class="space-y-1 text-xs font-body mb-3">
               <div class="flex">
                 <span class="text-white/50 w-16 shrink-0">PROJECT:</span>
-                <span class="text-white/90 font-heading tracking-wider">DevLog</span>
-              </div>
-              <div class="flex">
-                <span class="text-white/50 w-16 shrink-0">TYPE:</span>
-                <span class="text-white/70">Blog Engine</span>
+                <span class="text-white/90 font-heading tracking-wider">LeetUpdate - Daily Leetcode Scoreboard</span>
               </div>
               <div class="flex">
                 <span class="text-white/50 w-16 shrink-0">STACK:</span>
-                <span class="text-white/70">Astro, MDX, Tailwind</span>
+                <span class="text-white/70">Python, Twilio, AWS Lambda, DynamoDB, EventBridge</span>
               </div>
             </div>
             <div class="h-px bg-white/10 mb-3"></div>
             <p class="text-xs font-body text-white/60 mb-4" style="line-height: 1.7;">
-              &gt; Minimal developer blog with MDX support, syntax highlighting, RSS feed, and sub-second page loads.
+              &gt; A LeetCode scraping bot that maintains running scores for users based on solved problems. Sends daily SMS updates to users about scoreboard updates.
             </p>
-            <a href="#" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
+            <a href="https://github.com/finnmcm/leet_update" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
                                transition-colors duration-200 transition-transform duration-200
                                hover:bg-white hover:text-black hover:border-white
                                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
@@ -998,38 +992,7 @@
           </div>
         </div>
 
-        <!-- ---- Project Card 6 ---- -->
-        <div class="border border-white/20 transition-colors duration-200 transition-transform duration-200 hover:border-white/40 hover:card-shadow-hover hover:-translate-y-0.5 fade-in-up">
-          <div class="project-image-wrapper">
-            <img src="https://placehold.co/600x400/111111/333333?text=PROJECT.06" alt="Project 06" class="w-full h-40 lg:h-48 object-cover" loading="lazy" />
-          </div>
-          <div class="p-4 lg:p-5">
-            <div class="space-y-1 text-xs font-body mb-3">
-              <div class="flex">
-                <span class="text-white/50 w-16 shrink-0">PROJECT:</span>
-                <span class="text-white/90 font-heading tracking-wider">ShellBot</span>
-              </div>
-              <div class="flex">
-                <span class="text-white/50 w-16 shrink-0">TYPE:</span>
-                <span class="text-white/70">Discord Bot</span>
-              </div>
-              <div class="flex">
-                <span class="text-white/50 w-16 shrink-0">STACK:</span>
-                <span class="text-white/70">Go, Discord API, SQLite</span>
-              </div>
-            </div>
-            <div class="h-px bg-white/10 mb-3"></div>
-            <p class="text-xs font-body text-white/60 mb-4" style="line-height: 1.7;">
-              &gt; Modular Discord bot with custom commands, moderation tools, music playback, and persistent user data.
-            </p>
-            <a href="#" class="inline-block px-4 py-1.5 text-[10px] lg:text-xs font-heading text-white border border-white/60
-                               transition-colors duration-200 transition-transform duration-200
-                               hover:bg-white hover:text-black hover:border-white
-                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black
-                               active:scale-95 active:opacity-90">
-              VIEW SOURCE
-            </a>
-          </div>
+
         </div>
 
       </div>
@@ -1188,6 +1151,7 @@
        4. IntersectionObserver for section tracking (footer)
        5. Scroll-triggered fade-in animations
        6. WebGL chromatic wave shader (projects background)
+       7. WebGL concentric ring shader (work.log background)
        ============================================ -->
   <script>
     // ---- 1. System Clock ----
@@ -1639,6 +1603,140 @@
         });
       }, { threshold: 0.0 });
       shaderObserver.observe(section);
+
+      // --- Pause on tab switch to save GPU ---
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden && animationId) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+        } else if (!document.hidden && isVisible) {
+          animationId = requestAnimationFrame(render);
+        }
+      });
+    })();
+
+
+    // ---- 7. WebGL Concentric Ring Shader (Work.log Background) ----
+    // Animated concentric ring effect with chromatic color separation,
+    // rendered via raw WebGL on the #worklog-shader canvas.
+    // Uses IntersectionObserver to pause rendering when out of view.
+    (function initWorklogShader() {
+      var canvas = document.getElementById('worklog-shader');
+      if (!canvas) return;
+
+      // Acquire WebGL context — graceful fallback if unavailable
+      var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false });
+      if (!gl) return;
+
+      // --- Shader source code (ported from React/Three.js reference) ---
+      var vertSrc =
+        'attribute vec3 position;\n' +
+        'void main() {\n' +
+        '  gl_Position = vec4(position, 1.0);\n' +
+        '}';
+
+      var fragSrc =
+        '#define TWO_PI 6.2831853072\n' +
+        '#define PI 3.14159265359\n' +
+        'precision highp float;\n' +
+        'uniform vec2 resolution;\n' +
+        'uniform float time;\n' +
+        'void main(void) {\n' +
+        '  vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);\n' +
+        '  float t = time * 0.05;\n' +
+        '  float lineWidth = 0.002;\n' +
+        '  vec3 color = vec3(0.0);\n' +
+        '  for(int j = 0; j < 3; j++){\n' +
+        '    for(int i = 0; i < 5; i++){\n' +
+        '      color[j] += lineWidth * float(i*i) / abs(fract(t - 0.01*float(j) + float(i)*0.01) * 5.0 - length(uv) + mod(uv.x+uv.y, 0.2));\n' +
+        '    }\n' +
+        '  }\n' +
+        '  gl_FragColor = vec4(color, 1.0);\n' +
+        '}';
+
+      // --- Compile a shader of given type ---
+      function compileShader(type, src) {
+        var shader = gl.createShader(type);
+        gl.shaderSource(shader, src);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          console.warn('Worklog shader compile error:', gl.getShaderInfoLog(shader));
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+
+      // --- Create and link shader program ---
+      var vertShader = compileShader(gl.VERTEX_SHADER, vertSrc);
+      var fragShader = compileShader(gl.FRAGMENT_SHADER, fragSrc);
+      if (!vertShader || !fragShader) return;
+
+      var program = gl.createProgram();
+      gl.attachShader(program, vertShader);
+      gl.attachShader(program, fragShader);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.warn('Worklog shader link error:', gl.getProgramInfoLog(program));
+        return;
+      }
+      gl.useProgram(program);
+
+      // --- Full-screen quad geometry (two triangles covering clip space) ---
+      var positionBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+        -1, -1, 0,   1, -1, 0,  -1, 1, 0,
+        -1,  1, 0,   1, -1, 0,   1, 1, 0
+      ]), gl.STATIC_DRAW);
+
+      var posLoc = gl.getAttribLocation(program, 'position');
+      gl.enableVertexAttribArray(posLoc);
+      gl.vertexAttribPointer(posLoc, 3, gl.FLOAT, false, 0, 0);
+
+      // --- Uniform locations ---
+      var uResolution = gl.getUniformLocation(program, 'resolution');
+      var uTime       = gl.getUniformLocation(program, 'time');
+
+      // --- Resize handler: match canvas to experience section dimensions ---
+      var section = document.getElementById('experience');
+      function resize() {
+        var dpr = window.devicePixelRatio || 1;
+        var w = section.offsetWidth;
+        var h = section.offsetHeight;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      // --- Animation loop with visibility gating ---
+      var isVisible = false;
+      var animationId = null;
+      var timeValue = 1.0;
+
+      function render() {
+        if (!isVisible) { animationId = null; return; }
+        timeValue += 0.05;
+        gl.uniform2f(uResolution, canvas.width, canvas.height);
+        gl.uniform1f(uTime, timeValue);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        animationId = requestAnimationFrame(render);
+      }
+
+      // --- IntersectionObserver: only render when experience section is in view ---
+      var worklogObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          isVisible = entry.isIntersecting;
+          if (isVisible && !animationId) {
+            animationId = requestAnimationFrame(render);
+          }
+        });
+      }, { threshold: 0.0 });
+      worklogObserver.observe(section);
 
       // --- Pause on tab switch to save GPU ---
       document.addEventListener('visibilitychange', function () {
